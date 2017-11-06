@@ -22,7 +22,7 @@ namespace WebAddressbookTests
         public void SetupTest()
         {
             FirefoxOptions options = new FirefoxOptions();
-            options.BrowserExecutableLocation = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+            options.BrowserExecutableLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
             options.UseLegacyImplementation = true;
             driver = new ChromeDriver();
             baseURL = "http://localhost/";
