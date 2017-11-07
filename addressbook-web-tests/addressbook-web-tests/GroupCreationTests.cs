@@ -21,9 +21,11 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetupTest()
         {
-            FirefoxOptions options = new FirefoxOptions();
-            options.BrowserExecutableLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
-            options.UseLegacyImplementation = true;
+            // для использования Firefox
+            //FirefoxOptions options = new FirefoxOptions();
+            //options.BrowserExecutableLocation = @"C:\Program Files\Mozilla Firefox\firefox.exe";
+            //options.UseLegacyImplementation = true;
+            //driver = new FirefoxDriver(options);
             driver = new ChromeDriver();
             baseURL = "http://localhost/";
             verificationErrors = new StringBuilder();
