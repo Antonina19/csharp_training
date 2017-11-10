@@ -16,15 +16,31 @@ namespace WebAddressbookTests
     {
         protected bool acceptNextAlert = true;
 
-        public UserHelper(IWebDriver driver) : base(driver)
+        public UserHelper(ApplicationManager manager) : base(manager)
         {
         }
-        public void AddNewUser(UserData user)
+
+        public UserHelper Create(UserData user)
+        {
+            manager.Navigator.GoToAddNew();
+            AddNewUser(user);
+            return this;
+        }
+
+        public UserHelper Remove(int v)
+        {
+            SelectUser();
+            RemoveUser();
+            throw new NotImplementedException();
+        }
+
+        public UserHelper AddNewUser(UserData user)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(user.Firstname);
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(user.Lastname);
+            return this;
         }
         public string CloseAlertAndGetItsText()
         {
@@ -47,14 +63,18 @@ namespace WebAddressbookTests
                 acceptNextAlert = true;
             }
         }
-        public void SelectUser()
+        public UserHelper SelectUser()
         {
             driver.FindElement(By.Id("8")).Click();
+            return this;
         }
-        public void RemoveUser()
+        public UserHelper RemoveUser()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            return this;
         }
+
+
     }
 }

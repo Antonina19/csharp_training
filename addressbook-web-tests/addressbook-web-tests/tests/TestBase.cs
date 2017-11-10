@@ -17,10 +17,10 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetupTest()
         {
-            //driver = new ChromeDriver();
-            //baseURL = "http://localhost/";
-            //verificationErrors = new StringBuilder();
             app = new ApplicationManager();
+
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
 
         }
 

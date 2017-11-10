@@ -14,7 +14,6 @@ namespace WebAddressbookTests
     {
         protected IWebDriver driver;
         protected string baseURL;
-
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
@@ -22,12 +21,22 @@ namespace WebAddressbookTests
 
         public ApplicationManager()
         {
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            userHelper = new UserHelper(driver);
+            driver = new ChromeDriver();
+            baseURL = "http://localhost/";
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            userHelper = new UserHelper(this);
         }
 
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
+        }
         public void Stop()
         {
             try

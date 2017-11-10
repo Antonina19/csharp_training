@@ -13,10 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void UserRemovalTest()
         {
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
-            app.Users.SelectUser();
-            app.Users.RemoveUser();
+            app.Users.Remove(9);
         }
     }
 }
