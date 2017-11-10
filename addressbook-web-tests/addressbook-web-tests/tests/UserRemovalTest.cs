@@ -10,18 +10,13 @@ namespace WebAddressbookTests
     [TestFixture]
     public class UserRemovalTests : TestBase
     {
-
         [Test]
         public void UserRemovalTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            SelectUser();
-            RemoveUser();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Users.SelectUser();
+            app.Users.RemoveUser();
         }
-
-
-
-
     }
 }
