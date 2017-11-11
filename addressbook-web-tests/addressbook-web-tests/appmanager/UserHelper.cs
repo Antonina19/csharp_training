@@ -16,6 +16,17 @@ namespace WebAddressbookTests
     {
         protected bool acceptNextAlert = true;
 
+        public UserHelper Modify(int v, UserData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectUser();
+            AddNewUser(newData);
+            InitUserModification();
+            SubmitUserModification();
+            return this;
+        }
+
+
         public UserHelper(ApplicationManager manager) : base(manager)
         {
         }
@@ -42,6 +53,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("lastname")).SendKeys(user.Lastname);
             return this;
         }
+
         public string CloseAlertAndGetItsText()
         {
             try
@@ -65,7 +77,7 @@ namespace WebAddressbookTests
         }
         public UserHelper SelectUser()
         {
-            driver.FindElement(By.Id("8")).Click();
+            driver.FindElement(By.Id("9")).Click();
             return this;
         }
         public UserHelper RemoveUser()
@@ -74,7 +86,16 @@ namespace WebAddressbookTests
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
+        public UserHelper SubmitUserModification()
+        {
+            driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            return this;
+        }
 
-
+        public UserHelper InitUserModification()
+        {
+            driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
+            return this;
+        }
     }
 }
