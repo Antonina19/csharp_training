@@ -19,9 +19,10 @@ namespace WebAddressbookTests
         public UserHelper Modify(int v, UserData newData)
         {
             manager.Navigator.GoToHomePage();
+
             SelectUser();
-            AddNewUser(newData);
             InitUserModification();
+            AddNewUser(newData);
             SubmitUserModification();
             return this;
         }
@@ -42,7 +43,7 @@ namespace WebAddressbookTests
         {
             SelectUser();
             RemoveUser();
-            throw new NotImplementedException();
+            return this;
         }
 
         public UserHelper AddNewUser(UserData user)
