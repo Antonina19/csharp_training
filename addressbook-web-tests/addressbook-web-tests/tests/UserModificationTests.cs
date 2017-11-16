@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void UserModificationTest()
         {
-            UserData newData = new UserData("ddd", "ggg");
+            UserData newData = new UserData("ddаа", "ggg");
             app.Users.Modify(9, newData);
 
         }

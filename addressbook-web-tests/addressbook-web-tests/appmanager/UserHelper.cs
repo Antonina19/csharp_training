@@ -48,10 +48,8 @@ namespace WebAddressbookTests
 
         public UserHelper AddNewUser(UserData user)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(user.Firstname);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(user.Lastname);
+            Type(By.Name("firstname"), user.Firstname);
+            Type(By.Name("lastname"), user.Lastname);
             return this;
         }
 
