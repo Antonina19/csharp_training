@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         //protected bool acceptNextAlert = true;
 
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
             app = ApplicationManager.GetInstance();
         }   
