@@ -21,11 +21,17 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
 
             SelectUser();
+            if (IsUserExist() == false)
+            {
+                UserData user = new UserData("Nata", "Smit");
+                Create(user);
+            }
             InitUserModification();
             AddNewUser(newData);
             SubmitUserModification();
             return this;
         }
+
 
 
         public UserHelper(ApplicationManager manager) : base(manager)
@@ -41,6 +47,11 @@ namespace WebAddressbookTests
 
         public UserHelper Remove(int v)
         {
+            if (IsUserExist() == false)
+            {
+                UserData user = new UserData("Nata", "Smit");
+                Create(user);
+            }
             SelectUser();
             RemoveUser();
             return this;
@@ -95,6 +106,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
             return this;
+        }
+
+        public bool IsUserExist()
+        {
+            return IsElementPresent(By.Name("entry"));
         }
     }
 }
