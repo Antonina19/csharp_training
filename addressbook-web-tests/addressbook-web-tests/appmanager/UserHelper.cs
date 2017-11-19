@@ -21,11 +21,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
 
             SelectUser();
-            if (IsUserExist() == false)
-            {
-                UserData user = new UserData("Nata", "Smit");
-                Create(user);
-            }
             InitUserModification();
             AddNewUser(newData);
             SubmitUserModification();
@@ -47,11 +42,6 @@ namespace WebAddressbookTests
 
         public UserHelper Remove(int v)
         {
-            if (IsUserExist() == false)
-            {
-                UserData user = new UserData("Nata", "Smit");
-                Create(user);
-            }
             SelectUser();
             RemoveUser();
             return this;
@@ -112,5 +102,16 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.Name("entry"));
         }
+        public UserHelper CreateIfNotExist()
+        {
+            manager.Navigator.GoToHomePage();
+            if (IsUserExist() == false)
+            {
+                UserData user = new UserData("Nata", "Smit");
+                Create(user);
+            }
+            return this;
+        }
+
     }
 }

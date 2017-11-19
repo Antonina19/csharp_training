@@ -10,6 +10,12 @@ namespace WebAddressbookTests
     [TestFixture]
     public class UserRemovalTests : AuthTestBase
     {
+        [SetUp]
+        public void Init()
+        {
+            app.Users.CreateIfNotExist();
+        }
+
         [Test]
         public void UserRemovalTest()
         {

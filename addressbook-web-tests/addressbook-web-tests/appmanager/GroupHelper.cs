@@ -31,14 +31,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             SelectGroup(v);
-            if (IsGroupExist() == false)
-            {
-                GroupData group = new GroupData("gg");
-                group.Header = "op";
-                group.Footer = "lk";
-
-                Create(group);
-            }
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -49,14 +41,6 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
-            if (IsGroupExist() == false)
-            {
-                GroupData group = new GroupData("gg");
-                group.Header = "op";
-                group.Footer = "lk";
-
-                Create(group);
-            }
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -113,6 +97,20 @@ namespace WebAddressbookTests
         private bool IsGroupExist()
         {
             return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public GroupHelper CreateIfNotExist()
+        {
+            manager.Navigator.GoToGroupsPage();
+            if (IsGroupExist() == false)
+            {
+                GroupData group = new GroupData("gg");
+                group.Header = "op";
+                group.Footer = "lk";
+
+                Create(group);
+            }
+            return this;
         }
     }
 }
