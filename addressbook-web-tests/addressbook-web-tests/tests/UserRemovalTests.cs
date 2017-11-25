@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 
@@ -19,7 +20,14 @@ namespace WebAddressbookTests
         [Test]
         public void UserRemovalTest()
         {
-            app.Users.Remove(9);
+            List<UserData> oldUsers = app.Users.GetUserList();
+            app.Users.Remove(0);
+
+            List<UserData> newUsers = app.Users.GetUserList();
+            oldUsers.RemoveAt(0);
+            oldUsers.Sort();
+            newUsers.Sort();
+            Assert.AreEqual(oldUsers, newUsers);
         }
     }
 }

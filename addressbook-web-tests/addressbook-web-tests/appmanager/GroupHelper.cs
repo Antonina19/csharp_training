@@ -27,6 +27,8 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -44,7 +46,7 @@ namespace WebAddressbookTests
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupsPage();
-            throw new NotImplementedException();
+            return this;
         }
 
         public GroupHelper InitGroupCreation()
@@ -74,7 +76,7 @@ namespace WebAddressbookTests
         }
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
         public GroupHelper RemoveGroup()
@@ -111,6 +113,20 @@ namespace WebAddressbookTests
                 Create(group);
             }
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            manager.Navigator.GoToGroupsPage();
+
+            List<GroupData> groups = new List<GroupData>();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));                
+            }
+
+            return groups;
         }
     }
 }

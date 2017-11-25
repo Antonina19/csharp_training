@@ -27,8 +27,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-
-
         public UserHelper(ApplicationManager manager) : base(manager)
         {
         }
@@ -112,6 +110,21 @@ namespace WebAddressbookTests
             }
             return this;
         }
+        public List<UserData> GetUserList()
+        {
+            List<UserData> users = new List<UserData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> body = element.FindElements(By.TagName("td"));
+                string lastName = body[1].Text;
+                string firstName = body[2].Text;
 
+                users.Add(new UserData(firstName, lastName));
+            }
+
+            return users;
+        }
     }
 }

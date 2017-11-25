@@ -20,7 +20,16 @@ namespace WebAddressbookTests
         public void UserModificationTest()
         {
             UserData newData = new UserData("ddаа", "ggg");
+
+            List<UserData> oldUsers = app.Users.GetUserList();
+
             app.Users.Modify(9, newData);
+            List<UserData> newUsers = app.Users.GetUserList();
+            oldUsers[0].Firstname = "df";
+            oldUsers[0].Lastname = "df";
+            oldUsers.Sort();
+            newUsers.Sort();
+            Assert.AreEqual(oldUsers, newUsers);
 
         }
     }

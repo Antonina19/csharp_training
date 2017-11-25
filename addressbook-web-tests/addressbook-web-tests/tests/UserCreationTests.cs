@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 
@@ -14,18 +15,30 @@ namespace WebAddressbookTests
         public void UserCreationTest()
         {
             UserData user = new UserData("test1", "test1");
+
+            List<UserData> oldUsers = app.Users.GetUserList();
+
             app.Users.Create(user);
 
+            List<UserData> newUsers = app.Users.GetUserList();
+            oldUsers.Add(user);
+            oldUsers.Sort();
+            newUsers.Sort();
+            Assert.AreEqual(oldUsers, newUsers);
         }
 
         [Test]
         public void EmptyUserCreationTest()
         {
             UserData user = new UserData("", "");
+            List<UserData> oldUsers = app.Users.GetUserList();
             app.Users.Create(user);
-            // ERROR: Caught exception [Error: Dom locators are not implemented yet!]
-            //driver.FindElement(By.LinkText("home page")).Click();
-            // driver.FindElement(By.LinkText("Logout")).Click();
+
+            List<UserData> newUsers = app.Users.GetUserList();
+            oldUsers.Add(user);
+            oldUsers.Sort();
+            newUsers.Sort();
+            Assert.AreEqual(oldUsers, newUsers);
         }
     }
 }
