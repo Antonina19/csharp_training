@@ -76,17 +76,20 @@ namespace WebAddressbookTests
         public UserHelper SelectUser()
         {
             driver.FindElement(By.Id("9")).Click();
+            userCache = null;
             return this;
         }
         public UserHelper RemoveUser()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            userCache = null;
             return this;
         }
         public UserHelper SubmitUserModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            userCache = null;
             return this;
         }
 
@@ -110,21 +113,37 @@ namespace WebAddressbookTests
             }
             return this;
         }
+
+        private List<UserData> userCache = null;
+
         public List<UserData> GetUserList()
         {
-            List<UserData> users = new List<UserData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement element in elements)
+            if (userCache == null)
             {
-                IList<IWebElement> body = element.FindElements(By.TagName("td"));
-                string lastName = body[1].Text;
-                string firstName = body[2].Text;
+                userCache = new List<UserData>();
+                manager.Navigator.GoToHomePage();
 
-                users.Add(new UserData(firstName, lastName));
+                List<UserData> users = new List<UserData>();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements)
+                {
+                    IList<IWebElement> body = element.FindElements(By.TagName("td"));
+                    string id = body[0].FindElement(By.Name("selected[]")).GetAttribute("value");
+                    string lastName = body[1].Text;
+                    string firstName = body[2].Text;
+
+                    userCache.Add(new UserData(firstName, lastName)
+                    {
+                        Id = id
+                    });
+                }
             }
+            return new List<UserData>(userCache);
+        }
 
-            return users;
+        public int GetUserCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
         }
     }
 }

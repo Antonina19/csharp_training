@@ -20,6 +20,8 @@ namespace WebAddressbookTests
 
             app.Users.Create(user);
 
+            Assert.AreEqual(oldUsers.Count + 1, app.Users.GetUserCount());
+
             List<UserData> newUsers = app.Users.GetUserList();
             oldUsers.Add(user);
             oldUsers.Sort();
@@ -33,6 +35,8 @@ namespace WebAddressbookTests
             UserData user = new UserData("", "");
             List<UserData> oldUsers = app.Users.GetUserList();
             app.Users.Create(user);
+
+            Assert.AreEqual(oldUsers.Count + 1, app.Users.GetUserCount());
 
             List<UserData> newUsers = app.Users.GetUserList();
             oldUsers.Add(user);

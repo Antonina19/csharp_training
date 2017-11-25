@@ -8,37 +8,18 @@ namespace WebAddressbookTests
 {
     public class UserData : IEquatable<UserData>, IComparable<UserData>
     {
-        private string firstName;
-        private string lastName;
+
 
         public UserData(string firstname, string lastname)
         {
-            this.firstName = firstname;
-            this.lastName = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstName;
-            }
-            set
-            {
-                firstName = value;
-            }
-        }
-        public string Lastname
-        {
-            get
-            {
-                return lastName;
-            }
-            set
-            {
-                lastName = value;
-            }
-        }
+        public string Firstname { get; set; }
+ 
+        public string Lastname { get; set; }
+
         public bool Equals(UserData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -49,11 +30,11 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return lastName == other.lastName && firstName == other.firstName;
+            return Lastname == other.Lastname && Firstname == other.Firstname;
         }
         public override int GetHashCode()
         {
-            return (lastName+firstName).GetHashCode();
+            return (Lastname + Firstname).GetHashCode();
         }
 
         public int CompareTo(UserData other)
@@ -63,13 +44,13 @@ namespace WebAddressbookTests
                 return 1;
             }
 
-            if (lastName.CompareTo(other.lastName)!= 0)
+            if (Lastname.CompareTo(other.Lastname) != 0)
             {
-                return lastName.CompareTo(other.lastName);
+                return Lastname.CompareTo(other.Lastname);
             }
-            else if (firstName.CompareTo(other.firstName) != 0)
+            else if (Firstname.CompareTo(other.Firstname) != 0)
             {
-                return firstName.CompareTo(other.firstName);
+                return Firstname.CompareTo(other.Firstname);
             }
 
             return 0;
@@ -77,7 +58,9 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return string.Format("LastName: {0},FirstName: {1}", lastName, firstName);
+            return string.Format("LastName: {0},FirstName: {1}", Lastname, Firstname);
         }
+
+        public string Id { get; set; }
     }
 }
