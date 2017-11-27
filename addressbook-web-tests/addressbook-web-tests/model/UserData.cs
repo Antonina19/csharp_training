@@ -43,17 +43,8 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
+            return Lastname.CompareTo(other.Lastname) + Firstname.CompareTo(other.Firstname);
 
-            if (Lastname.CompareTo(other.Lastname) != 0)
-            {
-                return Lastname.CompareTo(other.Lastname);
-            }
-            else if (Firstname.CompareTo(other.Firstname) != 0)
-            {
-                return Firstname.CompareTo(other.Firstname);
-            }
-
-            return 0;
         }
 
         public override string ToString()
