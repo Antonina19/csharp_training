@@ -43,7 +43,11 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
-            return Lastname.CompareTo(other.Lastname) + Firstname.CompareTo(other.Firstname);
+            if (Object.Equals(this.Lastname, other.Lastname))
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+            return Lastname.CompareTo(other.Lastname);
 
         }
 
