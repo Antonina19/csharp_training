@@ -69,12 +69,14 @@
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
     <Compile Include="tests\LoginTests.cs" />
+    <Compile Include="tests\SearchTestss.cs" />
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\GroupCreationTests.cs" />
     <Compile Include="tests\UserCreationTests.cs" />
     <Compile Include="model\UserData.cs" />
     <Compile Include="appmanager\UserHelper.cs" />
+    <Compile Include="tests\UserInformationTests.cs" />
     <Compile Include="tests\UserModificationTests.cs" />
     <Compile Include="tests\UserRemovalTests.cs" />
   </ItemGroup>
