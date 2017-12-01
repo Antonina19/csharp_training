@@ -39,6 +39,8 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+
         public UserHelper Remove(int v)
         {
             SelectUser();
@@ -173,27 +175,47 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             InitUserModification(9);
+
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
 
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+
+            string address2 = driver.FindElement(By.Name("address2")).GetAttribute("value");
+            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
 
             return new UserData(firstName, lastName)
             {
+                Middlename = middleName,
+                Nickname = nickName,
+                Company = company,
+                Title = title,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
+                Fax = fax,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                Homepage = homepage,
+                Address2 = address2,
+                Phone2 = phone2,
+                Notes = notes
             };
         }
 
@@ -203,6 +225,29 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
+        }
+
+        internal UserData GetUserInformationFromDetailForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenDetailForm(index);
+
+            string userInfo = driver.FindElement(By.Id("content")).Text;
+
+            return new UserData("", "")
+            {
+                UserInfo = userInfo
+            };
+
+            //throw new NotImplementedException();
+        }
+
+        public void OpenDetailForm(int index)
+        {
+
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
         }
     }
 }

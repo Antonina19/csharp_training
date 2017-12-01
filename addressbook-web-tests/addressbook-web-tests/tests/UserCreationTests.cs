@@ -14,15 +14,24 @@ namespace WebAddressbookTests
         [Test]
         public void UserCreationTest()
         {
-            UserData user = new UserData("test1", "test1")
+            UserData user = new UserData("Alex", "Poon")
             {
+                Middlename = "Aleksandrovich",
+                Nickname = "AlexP",
+                Company = "Mix",
+                Title = "Title",
                 Address = "г.Москва, ул. Ленина, д.56",
                 HomePhone = "85664-5666",
                 WorkPhone = "666-558-6",
                 MobilePhone = "479-5556-885",
+                Fax = "566-85",
                 Email = "sa@mail.ru",
                 Email2 = "gvb@bk.ru",
-                Email3 = "fh@ya.ru"
+                Email3 = "fh@ya.ru",
+                Homepage = "www.ya.ru",
+                Address2 = "Moscow, Lenina 34",
+                Phone2 = "no",
+                Notes = "notes"
             };
 
             List<UserData> oldUsers = app.Users.GetUserList();
