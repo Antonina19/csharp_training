@@ -143,7 +143,24 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return string.Format("LastName: {0},FirstName: {1}", Lastname, Firstname);
+            return "firstname=" + Firstname +
+                "\nmiddlename=" + Middlename +
+                "\nlastname=" + Lastname +
+                "\nnickname=" + Nickname +
+                "\ncompany=" + Company +
+                "\ntitle=" + Title +
+                "\naddress=" + Address +
+                "\nhomePhone=" + HomePhone +
+                "\nmobilePhone=" + MobilePhone +
+                "\nworkPhone=" + WorkPhone +
+                "\nfax=" + Fax +
+                "\nemail=" + Email +
+                "\nemail2=" + Email2 +
+                "\nemail3=" + Email3 +
+                "\nhomepage=" + Homepage +
+                "\naddress2=" + Address2 +
+                "\nphone2= " + Phone2 +
+                "\nnotes=" + Notes;
         }
 
         public string Id { get; set; }

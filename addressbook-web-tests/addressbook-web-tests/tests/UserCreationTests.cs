@@ -11,47 +11,41 @@ namespace WebAddressbookTests
     [TestFixture]
     public class UserCreationTests : AuthTestBase
     {
-        [Test]
-        public void UserCreationTest()
+        public static IEnumerable<UserData> RandomUserDataProvider()
         {
-            UserData user = new UserData("Alex", "Poon")
+            List<UserData> users = new List<UserData>();
+            for (int i = 0; i < 5; i++)
             {
-                Middlename = "Aleksandrovich",
-                Nickname = "AlexP",
-                Company = "Mix",
-                Title = "Title",
-                Address = "г.Москва, ул. Ленина, д.56",
-                HomePhone = "85664-5666",
-                WorkPhone = "666-558-6",
-                MobilePhone = "479-5556-885",
-                Fax = "566-85",
-                Email = "sa@mail.ru",
-                Email2 = "gvb@bk.ru",
-                Email3 = "fh@ya.ru",
-                Homepage = "www.ya.ru",
-                Address2 = "Moscow, Lenina 34",
-                Phone2 = "no",
-                Notes = "notes"
-            };
+                users.Add(new UserData(GenerateRandomString(30), GenerateRandomString(30))
+                {
+                   Middlename = GenerateRandomString(100),
+                   Nickname = GenerateRandomString(100),
+                   Company = GenerateRandomString(100),
+                   Title  = GenerateRandomString(100),
+                   Address = GenerateRandomString(100),
+                   HomePhone = GenerateRandomString(100),
+                   MobilePhone = GenerateRandomString(100),
+                   WorkPhone = GenerateRandomString(100),
+                   Fax = GenerateRandomString(100),
+                   Email = GenerateRandomString(100),
+                   Email2 = GenerateRandomString(100),
+                   Email3 = GenerateRandomString(100),
+                   Homepage = GenerateRandomString(100),
+                   Address2 = GenerateRandomString(100),
+                   Phone2 = GenerateRandomString(100),
+                   Notes = GenerateRandomString(100)
+                });
+            }
 
-            List<UserData> oldUsers = app.Users.GetUserList();
+            return users;
 
-            app.Users.Create(user);
-
-            Assert.AreEqual(oldUsers.Count + 1, app.Users.GetUserCount());
-
-            List<UserData> newUsers = app.Users.GetUserList();
-            oldUsers.Add(user);
-            oldUsers.Sort();
-            newUsers.Sort();
-            Assert.AreEqual(oldUsers, newUsers);
         }
 
-        [Test]
-        public void EmptyUserCreationTest()
+        [Test, TestCaseSource("RandomUserDataProvider")]
+        public void UserCreationTest(UserData user)
         {
-            UserData user = new UserData("", "");
             List<UserData> oldUsers = app.Users.GetUserList();
+
             app.Users.Create(user);
 
             Assert.AreEqual(oldUsers.Count + 1, app.Users.GetUserCount());
