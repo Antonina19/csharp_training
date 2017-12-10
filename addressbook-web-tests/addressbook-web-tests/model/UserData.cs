@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
@@ -60,6 +63,8 @@ namespace WebAddressbookTests
 
         public string Notes { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public string AllPhones
         {
             get {
@@ -86,6 +91,8 @@ namespace WebAddressbookTests
             return Regex.Replace(phone,"[ -()]","") + "\r\n";
         }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public string AllEmails
         {
             get
@@ -269,6 +276,8 @@ namespace WebAddressbookTests
             return  "\r\n" + entry;
         }
 
+        [JsonIgnore]
+        [XmlIgnore]
         public string UserInfo
         {
             get
