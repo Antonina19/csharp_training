@@ -40,10 +40,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Remove(int v)
+        public GroupHelper Remove(int i)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(v);
+            SelectGroup(i);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;

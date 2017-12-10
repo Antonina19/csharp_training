@@ -20,6 +20,10 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
+        public UserData()
+        {
+        }
+
         public string Firstname { get; set; }
 
         public string Middlename { get; set; }
@@ -122,6 +126,7 @@ namespace WebAddressbookTests
             }
             return Lastname == other.Lastname && Firstname == other.Firstname;
         }
+
         public override int GetHashCode()
         {
             return (Lastname + Firstname).GetHashCode();
@@ -290,11 +295,11 @@ namespace WebAddressbookTests
 
         private string UserInfoList(string firstname, string middlename, string lastname, string nickname, string title, string company, string address)
         {
-            return FinishString(FIO(firstname, middlename, lastname))
+            return (FinishString(FIO(firstname, middlename, lastname))
                 + FinishString(nickname)
                 + FinishString(title)
                 + FinishString(company)
-                + FinishString(address).Trim();
+                + FinishString(address)).Trim();
         }
     }
 }

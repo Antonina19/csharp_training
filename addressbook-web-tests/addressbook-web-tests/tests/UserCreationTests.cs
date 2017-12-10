@@ -4,6 +4,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 using NUnit.Framework;
 
 
@@ -19,22 +21,22 @@ namespace WebAddressbookTests
             {
                 users.Add(new UserData(GenerateRandomString(30), GenerateRandomString(30))
                 {
-                   Middlename = GenerateRandomString(100),
-                   Nickname = GenerateRandomString(100),
-                   Company = GenerateRandomString(100),
-                   Title  = GenerateRandomString(100),
-                   Address = GenerateRandomString(100),
-                   HomePhone = GenerateRandomString(100),
-                   MobilePhone = GenerateRandomString(100),
-                   WorkPhone = GenerateRandomString(100),
-                   Fax = GenerateRandomString(100),
-                   Email = GenerateRandomString(100),
-                   Email2 = GenerateRandomString(100),
-                   Email3 = GenerateRandomString(100),
-                   Homepage = GenerateRandomString(100),
-                   Address2 = GenerateRandomString(100),
-                   Phone2 = GenerateRandomString(100),
-                   Notes = GenerateRandomString(100)
+                   Middlename = GenerateRandomString(30),
+                   Nickname = GenerateRandomString(30),
+                   Company = GenerateRandomString(30),
+                   Title  = GenerateRandomString(30),
+                   Address = GenerateRandomString(30),
+                   HomePhone = GenerateRandomString(30),
+                   MobilePhone = GenerateRandomString(30),
+                   WorkPhone = GenerateRandomString(30),
+                   Fax = GenerateRandomString(30),
+                   Email = GenerateRandomString(30),
+                   Email2 = GenerateRandomString(30),
+                   Email3 = GenerateRandomString(30),
+                   Homepage = GenerateRandomString(30),
+                   Address2 = GenerateRandomString(30),
+                   Phone2 = GenerateRandomString(30),
+                   Notes = GenerateRandomString(30)
                 });
             }
 
@@ -42,7 +44,7 @@ namespace WebAddressbookTests
 
         }
 
-        public static IEnumerable<UserData> UserDataFromFile()
+        public static IEnumerable<UserData> UserDataFromCsvFile()
         {
             List<UserData> users = new List<UserData>();
             string[] lines = File.ReadAllLines(@"users.csv");
@@ -72,7 +74,15 @@ namespace WebAddressbookTests
             return users;
         }
 
-        [Test, TestCaseSource("RandomUserDataProvider")] //UserDataFromFile
+        public static IEnumerable<UserData> UserDataFromXmlFile()
+        {
+           // List<UserData> groups = new List<UserData>();
+            return (List<UserData>)
+                new XmlSerializer(typeof(List<UserData>))
+                .Deserialize(new StreamReader(@"users.xml"));
+        }
+
+        [Test, TestCaseSource("UserDataFromCsvFile")] //UserDataFromCsvFile
         public void UserCreationTest(UserData user)
         {
             List<UserData> oldUsers = app.Users.GetUserList();

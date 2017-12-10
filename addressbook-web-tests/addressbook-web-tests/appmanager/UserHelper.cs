@@ -25,6 +25,7 @@ namespace WebAddressbookTests
             InitUserModification(9);
             AddNewUser(newData);
             SubmitUserModification();
+            ReternToHomePage();
             return this;
         }
 
@@ -36,10 +37,47 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToAddNew();
             AddNewUser(user);
+            FillUserForm(user);
+            SubmitUserCreation();
+            ReternToHomePage();
             return this;
         }
 
+        public UserHelper ReternToHomePage()
+        {
+            driver.FindElement(By.LinkText("home page")).Click();
+            return this;
+        }
 
+        private UserHelper FillUserForm(UserData user)
+        {
+            Type(By.Name("firstname"), user.Firstname);
+            Type(By.Name("middlename"), user.Middlename);
+            Type(By.Name("lastname"), user.Lastname);
+            Type(By.Name("nickname"), user.Nickname);
+            Type(By.Name("title"), user.Title);
+            Type(By.Name("company"), user.Company);
+            Type(By.Name("address"), user.Address);
+            Type(By.Name("home"), user.HomePhone);
+            Type(By.Name("mobile"), user.MobilePhone);
+            Type(By.Name("work"), user.WorkPhone);
+            Type(By.Name("fax"), user.Fax);
+            Type(By.Name("email"), user.Email);
+            Type(By.Name("email2"), user.Email2);
+            Type(By.Name("email3"), user.Email3);
+            Type(By.Name("homepage"), user.Homepage);
+            Type(By.Name("address2"), user.Address2);
+            Type(By.Name("phone2"), user.Phone2);
+            Type(By.Name("notes"), user.Notes);
+            return this;
+        }
+
+        private UserHelper SubmitUserCreation()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+            userCache = null;
+            return this;
+        }
 
         public UserHelper Remove(int v)
         {
