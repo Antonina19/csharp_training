@@ -29,6 +29,27 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public UserHelper Modify(UserData toBeModified, UserData newData)
+        {
+            manager.Navigator.GoToHomePage();
+
+            SelectUser();
+            InitUserModification(toBeModified.Id);
+            AddNewUser(newData);
+            SubmitUserModification();
+            ReternToHomePage();
+            return this;
+        }
+
+        public UserHelper InitUserModification(string id)
+        {
+            driver.FindElement(By.XPath("//input[@id='"+ id + "']/../.."))
+               .FindElements(By.TagName("td"))[7]
+               .FindElement(By.TagName("a")).Click();
+
+            return this;
+        }
+
         public UserHelper(ApplicationManager manager) : base(manager)
         {
         }
@@ -83,6 +104,20 @@ namespace WebAddressbookTests
         {
             SelectUser();
             RemoveUser();
+            return this;
+        }
+
+        public UserHelper Remove(UserData user)
+        {
+            SelectUser(user.Id);
+            RemoveUser();
+            return this;
+        }
+
+        private UserHelper SelectUser(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + id + "'])")).Click();
+
             return this;
         }
 

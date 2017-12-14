@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class UserCreationTests : AuthTestBase
+    public class UserCreationTests : UserTestBase
     {
         public static IEnumerable<UserData> RandomUserDataProvider()
         {
@@ -127,20 +128,34 @@ namespace WebAddressbookTests
             return users;
         }
 
-        [Test, TestCaseSource("UserDataFromExcelFile")] //UserDataFromCsvFile
+        [Test, TestCaseSource("UserDataFromJsonFile")] //UserDataFromCsvFile
         public void UserCreationTest(UserData user)
         {
-            List<UserData> oldUsers = app.Users.GetUserList();
+            List<UserData> oldUsers = UserData.GettAll();
 
             app.Users.Create(user);
 
             Assert.AreEqual(oldUsers.Count + 1, app.Users.GetUserCount());
 
-            List<UserData> newUsers = app.Users.GetUserList();
+            List<UserData> newUsers = UserData.GettAll();
             oldUsers.Add(user);
             oldUsers.Sort();
             newUsers.Sort();
             Assert.AreEqual(oldUsers, newUsers);
+        }
+
+        [Test]
+        public void TestDBConnectivityUsers()
+        {
+            DateTime start = DateTime.Now;
+            List<UserData> fromUi = app.Users.GetUserList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<UserData> fromDb = UserData.GettAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
         }
     }
 }

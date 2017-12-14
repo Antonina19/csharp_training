@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests 
 {
     [TestFixture]
-    public class UserRemovalTests : AuthTestBase
+    public class UserRemovalTests : UserTestBase
     {
         [SetUp]
         public void Init()
@@ -20,14 +20,14 @@ namespace WebAddressbookTests
         [Test]
         public void UserRemovalTest()
         {
-            List<UserData> oldUsers = app.Users.GetUserList();
-            app.Users.Remove(0);
+            List<UserData> oldUsers = UserData.GettAll();
+            UserData toBeRemoved = oldUsers[0];
+
+            app.Users.Remove(toBeRemoved);
 
             Assert.AreEqual(oldUsers.Count - 1, app.Users.GetUserCount());
+            List<UserData> newUsers = UserData.GettAll();
 
-            List<UserData> newUsers = app.Users.GetUserList();
-
-            UserData toBeRemoved = oldUsers[0];
             oldUsers.RemoveAt(0);
             oldUsers.Sort();
             newUsers.Sort();

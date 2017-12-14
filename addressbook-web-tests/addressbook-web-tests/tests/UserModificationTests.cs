@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class UserModificationTests : AuthTestBase
+    public class UserModificationTests : UserTestBase
     {
         [SetUp]
         public void Init()
@@ -21,23 +21,36 @@ namespace WebAddressbookTests
         {
             UserData newData = new UserData("ddаа", "ggg");
 
-            List<UserData> oldUsers = app.Users.GetUserList();
-            UserData oldData = oldUsers[0];
+            List<UserData> oldUsers = UserData.GettAll();
+            foreach (UserData user in oldUsers)
+            {
+                System.Console.Out.WriteLine("old " + user.Firstname + " " + user.Lastname);
+            }
+            UserData toBeModified = oldUsers[0];
 
-            app.Users.Modify(9, newData);
+            app.Users.Modify(toBeModified, newData);
 
             Assert.AreEqual(oldUsers.Count, app.Users.GetUserCount());
 
-            List<UserData> newUsers = app.Users.GetUserList();
-            oldUsers[0].Firstname = "df";
-            oldUsers[0].Lastname = "df";
+            List<UserData> newUsers = UserData.GettAll();
+            foreach (UserData user in newUsers)
+            {
+                System.Console.Out.WriteLine("new " + user.Firstname + " " + user.Lastname);
+            }
+            oldUsers[0] = newData;
+            foreach (UserData user in oldUsers)
+            {
+                System.Console.Out.WriteLine("oldmodified " + user.Firstname + " " + user.Lastname);
+            }
+
             oldUsers.Sort();
             newUsers.Sort();
+
             Assert.AreEqual(oldUsers, newUsers);
 
             foreach (UserData user in newUsers)
             {
-                if (user.Id == oldData.Id)
+                if (user.Id == toBeModified.Id)
                 {
                     Assert.AreEqual(newData.Firstname, user.Firstname);
                     Assert.AreEqual(newData.Lastname, user.Lastname);
