@@ -147,6 +147,15 @@ namespace WebAddressbookTests
             end = DateTime.Now;
             System.Console.Out.WriteLine(end.Subtract(start));
         }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            foreach (UserData user in UserData.GettAll())
+            {
+                System.Console.Out.WriteLine(user.Deprecated);
+            }
+        }
     }
 }
 

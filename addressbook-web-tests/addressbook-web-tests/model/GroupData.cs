@@ -71,5 +71,15 @@ namespace WebAddressbookTests
             }
         }
 
+        public List<UserData> GetUsers()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Users
+                        from gur in db.GUR.Where(p => p.GroupId == Id && p.UserId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
+                        select c).Distinct().ToList();
+            }
+
+        }
     }
 }

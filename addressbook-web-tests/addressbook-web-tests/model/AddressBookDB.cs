@@ -17,5 +17,7 @@ namespace WebAddressbookTests
         public ITable<GroupData> Groups { get { return GetTable<GroupData>(); } }
 
         public ITable<UserData> Users { get { return GetTable<UserData>(); } }
+
+        public ITable<GroupUsertRelation> GUR { get { return GetTable<GroupUsertRelation>(); } }
     }
 }

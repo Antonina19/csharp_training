@@ -87,7 +87,7 @@ namespace WebAddressbookTests
         public string Id { get; set; }
 
         [Column(Name = "deprecated")]
-        public string Deprecated { get; }
+        public string Deprecated { get; set; }
 
         [JsonIgnore]
         [XmlIgnore]
@@ -341,8 +341,10 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from g in db.Users where g.Deprecated == null select g).ToList();
+                return (from c in db.Users.Where (x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             }
         }
+
+        
     }
 }

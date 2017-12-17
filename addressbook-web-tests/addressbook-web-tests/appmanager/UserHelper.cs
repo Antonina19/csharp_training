@@ -29,6 +29,52 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void AddUserToGroup(UserData user, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectUser(user.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingUserToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void RemoveUserFromGroup(UserData user, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupToRemove(group.Name);
+            SelectUser(user.Id);
+            CommitRemoovingUserFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitRemoovingUserFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroupToRemove(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
+        private void CommitAddingUserToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public UserHelper Modify(UserData toBeModified, UserData newData)
         {
             manager.Navigator.GoToHomePage();
@@ -114,10 +160,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private UserHelper SelectUser(string id)
+        private UserHelper SelectUser(string userId)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + id + "'])")).Click();
-
+            //driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + id + "'])")).Click();
+            driver.FindElement(By.Id(userId)).Click();
             return this;
         }
 
@@ -300,7 +346,7 @@ namespace WebAddressbookTests
             return Int32.Parse(m.Value);
         }
 
-        internal UserData GetUserInformationFromDetailForm(int index)
+        public UserData GetUserInformationFromDetailForm(int index)
         {
             manager.Navigator.GoToHomePage();
             OpenDetailForm(index);
