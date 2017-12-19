@@ -9,10 +9,18 @@ namespace WebAddressbookTests
 {
     public class AddingUserToGroupTests : AuthTestBase
     {
+        [SetUp]
+        public void SetupAppGroupRemovalTest()
+        {
+            app.Groups.CreateIfNotExist();
+            app.Users.CreateIfNotExist();
+        }
+
         [Test]
         public void TestAddingUserToGroup()
         {
             GroupData group = GroupData.GettAll()[0];
+            app.Users.CheckAllUsersExist(group);
             List<UserData> oldList = group.GetUsers();
             UserData user =  UserData.GettAll().Except(oldList).First();
 
@@ -30,6 +38,7 @@ namespace WebAddressbookTests
         public void TestRemovigUserFromGroup()
         {
             GroupData group = GroupData.GettAll()[0];
+            app.Users.CheckNoUsersExist(group);
             List<UserData> oldList = group.GetUsers();
             UserData user = UserData.GettAll().Except(oldList).First();
 

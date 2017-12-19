@@ -29,6 +29,16 @@ namespace WebAddressbookTests
             return this;
         }
 
+        internal void CheckAllUsersExist(GroupData group)
+        {
+            if(UserData.GettAll().Except(group.GetUsers()).Count() == 0)
+            {
+                UserData user = group.GetUsers().First();
+
+                RemoveUserFromGroup(user, group);
+            }
+        }
+
         public void AddUserToGroup(UserData user, GroupData group)
         {
             manager.Navigator.GoToHomePage();
@@ -38,6 +48,16 @@ namespace WebAddressbookTests
             CommitAddingUserToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        internal void CheckNoUsersExist(GroupData group)
+        {
+            if (group.GetUsers().Count() == 0)
+            {
+                UserData user = UserData.GettAll().First();
+
+                AddUserToGroup(user, group);
+            }
         }
 
         public void RemoveUserFromGroup(UserData user, GroupData group)
@@ -368,5 +388,7 @@ namespace WebAddressbookTests
                 .FindElements(By.TagName("td"))[6]
                 .FindElement(By.TagName("a")).Click();
         }
+
+
     }
 }
