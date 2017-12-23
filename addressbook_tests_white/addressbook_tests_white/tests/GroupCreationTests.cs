@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace addressbook_tests_autoit
+namespace addressbook_tests_white
 {
     [TestFixture]
     public class GroupCreationTests : TestBase
@@ -14,12 +14,13 @@ namespace addressbook_tests_autoit
 
             GroupData newGroup = new GroupData()
             {
-                Name = "test"
+                Name = "white"
             };
 
             app.Groups.Add(newGroup);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Add(newGroup);
             oldGroups.Sort();
