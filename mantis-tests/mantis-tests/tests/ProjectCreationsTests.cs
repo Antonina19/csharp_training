@@ -21,11 +21,16 @@ namespace mantis_tests.tests
                 Description = ""
             };
 
-            app.Projects.DeleteIfSuchProjectExist(project);
-            List<ProjectData> oldProjects = app.Projects.GetProjectList();
+            //app.Projects.DeleteIfSuchProjectExist(project);
+            app.Projects.DeleteIfSuchProjectExist(account, project);
+            
+            //List<ProjectData> oldProjects = app.Projects.GetProjectList();
+            List<ProjectData> oldProjects = app.Projects.GetProjectList(account);
             app.Projects.Create(project);
             Assert.AreEqual(oldProjects.Count + 1, app.Projects.GetProjectCount());
-            List<ProjectData> newProjects = app.Projects.GetProjectList();
+
+            //List<ProjectData> newProjects = app.Projects.GetProjectList();
+            List<ProjectData> newProjects = app.Projects.GetProjectList(account);
             oldProjects.Add(project);
             oldProjects.Sort();
             newProjects.Sort();

@@ -14,24 +14,54 @@ namespace mantis_tests
     {
         public ProjectManagementHelper(ApplicationManager manager) : base(manager) { }
 
-        public void CreateIfNoProjectsPresent()
+        public void CreateIfNoProjectsPresent(ProjectData project)
         {
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             if (!IsElementPresent(By.XPath("//table[1]/tbody/tr")))
             {
-                ProjectData project = new ProjectData()
-                {
-                    Name = "Project1",
-                    Description = ""
-                };
-
                 Create(project);
             }
         }
 
+        public void CreateIfNoProjectsPresent(AccountData account, ProjectData project)
+        {
+            if (GetProjectList(account).Count == 0)
+            {
+                Create(account, project);
+            }
+        }
+
+        public List<ProjectData> GetProjectList(AccountData account)
+        {
+            List<ProjectData> list = new List<ProjectData>();
+
+            Mantis.MantisConnectPortTypeClient client = new Mantis.MantisConnectPortTypeClient();
+            Mantis.ProjectData[] projects = client.mc_projects_get_user_accessible(account.Name, account.Password);
+            foreach (Mantis.ProjectData project in projects)
+            {
+                list.Add(new ProjectData()
+                {
+                    Name = project.name,
+                    Description = project.description
+
+                });
+            }
+
+            return list;
+
+        }
+
+        private void Create(AccountData account, ProjectData projectData)
+        {
+            Mantis.MantisConnectPortTypeClient client = new Mantis.MantisConnectPortTypeClient();
+            Mantis.ProjectData project = new Mantis.ProjectData();
+            project.name = projectData.Name;
+            client.mc_project_add(account.Name, account.Password, project);
+        }
+
         public void Create(ProjectData project)
         {
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             InitProjectCreation();
             FillProjectForm(project);
             SubmitProjectCreation();
@@ -57,10 +87,16 @@ namespace mantis_tests
 
         public void Remove(ProjectData project)
         {
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             OpenEditPage(project.Name);
             RemoveProject();
             SubmitProjectRemove();
+        }
+
+        public void Remove(AccountData account, String projectId)
+        {
+            Mantis.MantisConnectPortTypeClient client = new Mantis.MantisConnectPortTypeClient();
+            client.mc_project_delete(account.Name, account.Password, projectId);
         }
 
         private void SubmitProjectRemove()
@@ -80,18 +116,28 @@ namespace mantis_tests
 
         public void DeleteIfSuchProjectExist(ProjectData project)
         {
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             if (IsElementPresent(By.XPath("//table[1]/tbody/tr/td[1]/a[.='"+project.Name + "']")))
             {
                 Remove(project);
             }
         }
 
+        public void DeleteIfSuchProjectExist(AccountData account, ProjectData project)
+        {
+            Mantis.MantisConnectPortTypeClient client = new Mantis.MantisConnectPortTypeClient();
+            string projectId = client.mc_project_get_id_from_name(account.Name, account.Password, project.Name);
+
+            if (projectId !=null && projectId != "0")
+            {
+                Remove(account, projectId);
+            }
+        }
 
         public List<ProjectData> GetProjectList()
         {
             List<ProjectData> list = new List<ProjectData>();
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             ICollection<IWebElement> elements = driver.FindElements(By.CssSelector(".table"))[0]
                 .FindElements(By.CssSelector("tbody>tr"));
             foreach (IWebElement element in elements)
@@ -106,7 +152,7 @@ namespace mantis_tests
         }
         public int GetProjectCount()
         {
-            manager.Navigator.GoToProgectTab();
+            manager.Navigator.GoToProjectTab();
             return driver.FindElements(By.CssSelector(".table"))[0]
                 .FindElements(By.CssSelector("tbody>tr"))
                 .Count();

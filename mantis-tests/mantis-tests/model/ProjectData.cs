@@ -10,6 +10,7 @@ namespace mantis_tests
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Id { get; set; }
 
         public ProjectData()
         {
@@ -31,7 +32,7 @@ namespace mantis_tests
 
         public override string ToString()
         {
-            return "project name = <" + Name + ">";
+            return "project Id = <" + Id + ">" + "project name = <" + Name + ">";
         }
 
         public int CompareTo(ProjectData other)

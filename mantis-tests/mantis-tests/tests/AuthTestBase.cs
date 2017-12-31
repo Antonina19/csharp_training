@@ -9,10 +9,17 @@ namespace mantis_tests
 {
     public class AuthTestBase : TestBase
     {
+        internal AccountData account = new AccountData()
+        {
+            Name = "administrator",
+            Password = "root"
+        };
+
+
         [SetUp]
         public void SetupLogin()
         {
-            app.Auth.Login(new AccountData("administrator", "root"));
+            app.Auth.Login(account);
         }
     }
 }
